@@ -1,0 +1,42 @@
+# This file tells Git which files and folders to ignore in your Neovim configuration.
+# We only want to track your actual config files, not generated data or plugins.
+
+---
+
+# Lazy.nvim (Plugin Manager)
+# Don't commit the downloaded plugin code itself.
+.lazy/
+# This file locks plugin versions. Commit it to keep your setup consistent!
+lazy-lock.json
+
+---
+
+# Generated Files & Caches
+# Lua bytecode cache
+*.luac
+# Neovim's main data directory, often for plugin data or LSP installs.
+nvim-data/
+.nvim-data/
+
+---
+
+# DAP (Debugger) Related Files
+# nvim-dap often creates a log file and sometimes a temporary directory.
+dap-debug-log.txt
+.dap/
+
+---
+
+# Temporary & Editor-Specific Files
+# Neovim/Vim swap and backup files
+*.swp
+*.swo
+*.swn
+*~
+*.bak
+*.tmp
+# macOS specific
+.DS_Store
+# Windows specific
+Thumbs.db
+desktop.ini
