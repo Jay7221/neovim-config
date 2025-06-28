@@ -49,14 +49,49 @@ return {
         lookahead = true,
         keymaps = {
           -- Common text object keymaps; uncomment and customize as desired
-          -- ["af"] = "@function.outer",
-          -- ["if"] = "@function.inner",
-          -- ["ac"] = "@class.outer",
-          -- ["ic"] = "@class.inner",
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+          ["as"] = "@statement.outer",
+          ["is"] = "@statement.inner",
+          ["al"] = "@loop.outer",
+          ["il"] = "@loop.inner",
+          ["aa"] = "@parameter.outer",
+          ["ia"] = "@parameter.inner",
+          ["aF"] = "@frame.outer", -- Often useful for entire block/file
+          ["iF"] = "@frame.inner",
         },
       },
-      swap = { enable = false }, -- Set to true if you want swap textobjects
-      move = { enable = false }, -- Set to true if you want move textobjects
+      swap = {
+        enable = true, -- Set to true if you want swap textobjects
+        swap_next = {
+            ["<leader>sn"] = "@parameter.inner",
+        },
+        swap_previous = {
+            ["<leader>sp"] = "@parameter.inner",
+        },
+      },
+      move = {
+        enable = true, -- Set to true if you want move textobjects
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+        },
+        goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+        },
+        goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+        },
+        goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+        },
+      },
     },
   },
 
