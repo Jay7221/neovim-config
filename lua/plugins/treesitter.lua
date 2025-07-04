@@ -1,15 +1,20 @@
 return {
   'nvim-treesitter/nvim-treesitter',
-  -- It's common to set branch = 'master' and build = ':TSUpdate' for treesitter
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects', -- For textobject functionality
+  },
   branch = 'master',
   build = ':TSUpdate', -- Ensures parsers are updated when installing/updating plugin
-  -- 'VeryLazy' ensures it loads early enough for highlighting without blocking startup
   event = "VeryLazy",
 
   opts = {
-    -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
-    -- Added "cpp" explicitly here for C++ highlighting.
+    -- Focus on competitive programming languages
+    ensure_installed = {
+      "c", "cpp", "go", "rust",
+      "lua", "vim", "vimdoc", "query",
+      "markdown", "markdown_inline",
+      "bash", "json", "yaml" -- Useful for config files
+    },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -17,9 +22,8 @@ return {
     -- Automatically install missing parsers when entering buffer
     auto_install = true,
 
-    -- List of parsers to ignore installing (or "all")
-    -- Ensure you don't list "cpp" or "c" here if you want them highlighted
-    ignore_install = { "javascript" }, -- Retained from your example
+    -- Don't install parsers we don't need for competitive programming
+    ignore_install = { "javascript", "typescript", "html", "css" },
 
     highlight = {
       enable = true,
@@ -41,55 +45,28 @@ return {
     -- Indent is often enabled with treesitter for better auto-indentation
     indent = { enable = true },
 
-    -- If you want to use treesitter textobjects (like 'af' for around function)
-    -- This section is commonly included, but remove if not needed.
+    -- Simplified textobjects for competitive programming
+    -- Focus on functions and basic code navigation
     textobjects = {
       select = {
         enable = true,
         lookahead = true,
         keymaps = {
-          -- Common text object keymaps; uncomment and customize as desired
+          -- Essential for competitive programming
           ["af"] = "@function.outer",
           ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-          ["as"] = "@statement.outer",
-          ["is"] = "@statement.inner",
           ["al"] = "@loop.outer",
           ["il"] = "@loop.inner",
-          ["aa"] = "@parameter.outer",
-          ["ia"] = "@parameter.inner",
-          ["aF"] = "@frame.outer", -- Often useful for entire block/file
-          ["iF"] = "@frame.inner",
-        },
-      },
-      swap = {
-        enable = true, -- Set to true if you want swap textobjects
-        swap_next = {
-            ["<leader>sn"] = "@parameter.inner",
-        },
-        swap_previous = {
-            ["<leader>sp"] = "@parameter.inner",
         },
       },
       move = {
-        enable = true, -- Set to true if you want move textobjects
-        set_jumps = true, -- whether to set jumps in the jumplist
+        enable = true,
+        set_jumps = true,
         goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = "@class.outer",
-        },
-        goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
+            ["]f"] = "@function.outer",
         },
         goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-        },
-        goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
+            ["[f"] = "@function.outer",
         },
       },
     },

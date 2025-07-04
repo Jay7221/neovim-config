@@ -40,3 +40,26 @@ dap-debug-log.txt
 # Windows specific
 Thumbs.db
 desktop.ini
+
+---
+
+# LSP & Language Server Files
+# These contain system-specific paths and can be regenerated
+.ccls
+.clangd
+compile_commands.json
+.cache/
+setup_cpp_lsp.sh
+
+---
+
+# Competitive Programming Files
+# You might want to exclude personal solutions
+# Uncomment if you don't want to share your solutions:
+# *.cpp
+# *.c
+# *.go
+# *.rs
+# input.txt
+# output.txt
+# *.testcases

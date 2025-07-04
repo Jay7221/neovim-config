@@ -87,18 +87,17 @@ return {
         save_all_files = false,
         compile_directory = ".",
         compile_command = {
-            c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
-            cpp = { exec = "g++-14", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
-            rust = { exec = "rustc", args = { "$(FNAME)" } },
-            java = { exec = "javac", args = { "$(FNAME)" } },
+            c = { exec = "gcc", args = { "-Wall", "-Wextra", "-std=c17", "-O2", "$(FNAME)", "-o", "$(FNOEXT)" } },
+            cpp = { exec = "g++-15", args = { "-Wall", "-Wextra", "-std=c++20", "-O2", "$(FNAME)", "-o", "$(FNOEXT)" } },
+            go = { exec = "go", args = { "build", "-o", "$(FNOEXT)", "$(FNAME)" } },
+            rust = { exec = "rustc", args = { "-O", "$(FNAME)" } },
         },
         running_directory = ".",
         run_command = {
             c = { exec = "./$(FNOEXT)" },
             cpp = { exec = "./$(FNOEXT)" },
+            go = { exec = "./$(FNOEXT)" },
             rust = { exec = "./$(FNOEXT)" },
-            python = { exec = "python", args = { "$(FNAME)" } },
-            java = { exec = "java", args = { "$(FNOEXT)" } },
         },
         multiple_testing = -1,
         maximum_time = 5000,
@@ -118,7 +117,7 @@ return {
         template_file = false,
         evaluate_template_modifiers = false,
         date_format = "%c",
-        received_files_extension = "cpp",
+        received_files_extension = "cpp", -- Default to C++ for competitive programming
         received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
         received_problems_prompt_path = true,
         received_contests_directory = "$(CWD)",
@@ -133,14 +132,17 @@ return {
     -- This ensures CompetiTest is set up with your options
     require("competitest").setup(opts)
 
-    -- Optional: Define keymaps for common CompetiTest actions
-    -- Use <leader> + c as a competitive programming prefix
-    vim.keymap.set("n", "<leader>ca", ":CompetiTest add_testcase<CR>", { desc = "Add Testcase" })
-    vim.keymap.set("n", "<leader>ce", ":CompetiTest edit_testcase<CR>", { desc = "Edit Testcase" })
-    vim.keymap.set("n", "<leader>cd", ":CompetiTest delete_testcase<CR>", { desc = "Delete Testcase" })
-    vim.keymap.set("n", "<leader>cr", ":CompetiTest run<CR>", { desc = "Run Testcases" })
-    vim.keymap.set("n", "<leader>cs", ":CompetiTest show_ui<CR>", { desc = "Show CompetiTest UI" })
-    vim.keymap.set("n", "<leader>cn", ":CompetiTest run_no_compile<CR>", { desc = "Run Testcases (No Compile)" })
-    vim.keymap.set("n", "<leader>cc", ":CompetiTest convert<CR>", { desc = "Convert Testcases File" }) -- For single file vs multiple files
+    -- CompetiTest keymaps using <leader>t prefix (t for Test)
+    vim.keymap.set("n", "<leader>ta", ":CompetiTest add_testcase<CR>", { desc = "Add Testcase" })
+    vim.keymap.set("n", "<leader>te", ":CompetiTest edit_testcase<CR>", { desc = "Edit Testcase" })
+    vim.keymap.set("n", "<leader>td", ":CompetiTest delete_testcase<CR>", { desc = "Delete Testcase" })
+    vim.keymap.set("n", "<leader>tr", ":CompetiTest run<CR>", { desc = "Run Testcases" })
+    vim.keymap.set("n", "<leader>tu", ":CompetiTest show_ui<CR>", { desc = "Show CompetiTest UI" })
+    vim.keymap.set("n", "<leader>tn", ":CompetiTest run_no_compile<CR>", { desc = "Run Testcases (No Compile)" })
+    vim.keymap.set("n", "<leader>tf", ":CompetiTest convert<CR>", { desc = "Convert Testcases File" })
+
+    -- Additional competitive programming utilities
+    vim.keymap.set("n", "<leader>tt", ":CompetiTest receive testcases<CR>", { desc = "Receive Testcases from Browser" })
+    vim.keymap.set("n", "<leader>tp", ":CompetiTest receive problem<CR>", { desc = "Receive Problem from Browser" })
     end,
 }
